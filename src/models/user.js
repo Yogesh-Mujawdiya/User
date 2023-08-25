@@ -18,52 +18,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        validate(value) {
-            if (value.length < 8) {
-                throw new Error('رمز عبور بایستی حداقل ۸ کاراکتر باشد')
-            }
-            else if (value.toLowerCase().includes('password')) {
-                throw new Error('کلمه عبور نمیتواند شامل password باشد.')
-            }
-
-        }
-    },
-    age: {
-        type: Number,
-        default: 0,
-        validate(value) {
-            if (value < 0) {
-                throw new Error('Age must be positive number!')
-            }
-        }
     },
     email: {
         type: String,
         required: true,
         lowercase: true,
         unique: true,
-        validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error('ایمیل نامعتبر می باشد!')
-            }
-        }
     },
-    address: {
-        type: String
-    },
-    phoneNumber: {
-        type: String
-    },
-    roleType: {
-        type: Number,
-        required: true,
-    },
-    tokens: [{
-        token: {
-            type: String,
-            required: true
-        }
-    }]
 })
 
 userSchema.statics.findByCredentials = async (email, password) => {
